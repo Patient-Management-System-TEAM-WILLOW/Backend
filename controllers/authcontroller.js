@@ -181,6 +181,8 @@ const UpdateProfile = async(req,res) => {
                 address,
                 hospital } = req.body;
 
+        // console.log(req.body);
+
         const isExist = await User.findOne({ _id: id });
         if(!isExist){
             return res.status(400).json({
@@ -223,9 +225,13 @@ const UpdateProfile = async(req,res) => {
             UpdateObject.is_default = parseInt(req.body.default);
         }
 
+        // console.log(UpdateObject);
+
         const UpdateData = await User.findByIdAndUpdate({ _id: id },{
             $set: UpdateObject
         }, {new: true});
+
+        // console.log(UpdateData);
 
         return res.status(200).json({
             success: true,
