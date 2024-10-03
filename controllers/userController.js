@@ -14,7 +14,23 @@ const AddUser = async(req,res) => {
             })
         }
 
-        const { name, email } = req.body;
+        const { first_name, 
+            last_name, 
+            email, 
+            number, 
+            age, 
+            height, 
+            weight, 
+            gender, 
+            bloodg, 
+            birth,
+            country, 
+            state, 
+            city, 
+            address,
+            hospital, 
+            confirm_password } = req.body;
+
         const isExists = await User.findOne({
             email
         })
@@ -29,9 +45,24 @@ const AddUser = async(req,res) => {
         const HasgPassword = await bcrypt.hash(password, 8);
 
         var obj = {
-            name,
+            first_name,
+            last_name,
             email,
-            password: HasgPassword
+            number,
+            age, 
+            height, 
+            weight, 
+            gender, 
+            bloodg, 
+            birth,
+            country,
+            state,
+            city,
+            address,
+            hospital,
+            password: HasgPassword,
+            confirm_password,
+            
         }
         if(req.body.role && req.body.role == 1){
             return res.status(400).json({

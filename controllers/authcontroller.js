@@ -16,7 +16,24 @@ const registerUser = async(req,res) => {
             })
         }
 
-        const { name, email, password } = req.body;
+        const { first_name, 
+                last_name, 
+                email, 
+                number, 
+                age, 
+                height, 
+                weight, 
+                gender, 
+                bloodg, 
+                birth,
+                country, 
+                state, 
+                city, 
+                address,
+                hospital, 
+                password, 
+                confirm_password } = req.body;
+
         const isExistUser = await User.findOne({ email });
         if(isExistUser){
             return res.status(200).json({
@@ -28,9 +45,23 @@ const registerUser = async(req,res) => {
         const hashedPassword = await bcrypt.hash(password, 8);
 
         const user = new User({
-            name,
+            first_name,
+            last_name,
             email,
-            password:hashedPassword
+            number,
+            age,
+            height,
+            weight,
+            gender,
+            bloodg,
+            birth,
+            country,
+            state,
+            city,
+            address,
+            hospital,
+            password: hashedPassword,
+            confirm_password,
         })
 
         const userData = await user.save();
