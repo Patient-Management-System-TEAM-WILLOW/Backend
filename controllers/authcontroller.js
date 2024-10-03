@@ -151,8 +151,100 @@ const getProfile = async(req,res) => {
     }
 }
 
+// Update for profile------------------------------------------------
+
+const UpdateProfile = async(req,res) => {
+    try{
+        const errors = validationResult(req);
+        if(!errors.isEmpty()){
+            return res.status(200).json({
+                success: false,
+                msg: 'Errors',
+                errors:errors.array()
+            })
+        }
+
+        const { id,
+                first_name, 
+                last_name, 
+                email, 
+                number, 
+                age, 
+                height, 
+                weight, 
+                gender, 
+                bloodg, 
+                birth,
+                country, 
+                state, 
+                city, 
+                address,
+                hospital } = req.body;
+
+        const isExist = await User.findOne({ _id: id });
+        if(!isExist){
+            return res.status(400).json({
+                success: false,
+                msg: "profile id not found!"
+            })
+        }
+
+        const isNameAssigned = await User.findOne({
+            _id: {$ne: id},
+            permision_name:{
+                $regex: first_name,
+                $options: 'i'
+            } 
+        });
+        if(isNameAssigned){
+            return res.status(400).json({
+                success: false,
+                msg: "Profile Name is already exits!"
+            })
+        }
+
+        var UpdateObject = { first_name, 
+                            last_name, 
+                            email, 
+                            number, 
+                            age, 
+                            height, 
+                            weight, 
+                            gender, 
+                            bloodg, 
+                            birth,
+                            country, 
+                            state, 
+                            city, 
+                            address,
+                            hospital }
+
+        if(req.body.default != null){
+            UpdateObject.is_default = parseInt(req.body.default);
+        }
+
+        const UpdateData = await User.findByIdAndUpdate({ _id: id },{
+            $set: UpdateObject
+        }, {new: true});
+
+        return res.status(200).json({
+            success: true,
+            msg: "Profile Update Successfully!",
+            data: UpdateData
+        })
+
+    }
+    catch(error){
+        return res.status(400).json({
+            success: false,
+            msg: error.message
+        })
+    }
+}
+
 module.exports = {
     registerUser,
     loginUser,
-    getProfile
+    getProfile,
+    UpdateProfile
 }
