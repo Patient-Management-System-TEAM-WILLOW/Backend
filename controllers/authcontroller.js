@@ -265,7 +265,8 @@ const emailCheck = async (req, res) => {
                 port: 465,
                 secure: true,
                 auth: {
-                    // TODO: replace `user` and `pass` values from <https://forwardemail.net>
+                    // TODO: replace `user` and `pass` values from <https://forwardemail.net> ( not for you )
+                    // change it user email as person who using it
                     user: 'anurag253118@gmail.com',
                     pass: 'dehycqoqqepjnrwi'
                 }
@@ -275,8 +276,8 @@ const emailCheck = async (req, res) => {
             res.cookie('email', checkEmail.email);
 
             const info = await transporter.sendMail({
-                from: 'anurag253118@gmail.com', // sender address
-                to: "anurag253118@gmail.com", // list of receivers
+                from: 'blahbah@gmail.com', // sender email address
+                to: "blahblah@gmail.com", // receivers email address
                 subject: "OTP", // Subject line
                 html: `<b>${OTP}</b>`, // html body
             });
