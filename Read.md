@@ -29,4 +29,28 @@ Api Documentation:- api to use in postman
                     for login new users    = http://127.0.0.1:8001/api/login
                     for viewing profile    = http://127.0.0.1:8001/api/profile
                     for updating prof data = http://127.0.0.1:8001/api/updateProfile
+
+
                     for forpas use this    = http://127.0.0.1:8001/api/CheckEmail   ( and then you can change password from front side so put this link in browser for using it directly )
+
+
+                    for appoinment get     = http://127.0.0.1:8001/api/getAppointments
+                    for appoinment add     = http://127.0.0.1:8001/api/addAppointments
+                    for appoinment del     = http://127.0.0.1:8001/api/delAppointments
+                    for appoinment upt     = http://127.0.0.1:8001/api/uptAppointments
+
+                    
+
+                    and this is body structure of appoinment api 
+                    {
+                        "first_name":"sanju",
+                        "last_name":"bawa",
+                        "diese_name":"typhoid",
+                        "patient_issue":"headache",
+                        "hospital":"bharat hospital",
+                        "app_date":"10-09-2027",
+                        "app_time":"10:15",
+                        "app_type":"online"
+                    }
+
+                    and using del and upt api you have to put id in this object.
