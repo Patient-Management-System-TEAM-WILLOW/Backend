@@ -267,7 +267,7 @@ const emailCheck = async (req, res) => {
                 auth: {
                     // TODO: replace `user` and `pass` values from <https://forwardemail.net> ( not for you )
                     // change it user email as person who using it
-                    user: 'anurag253118@gmail.com',
+                    user: 'blah@gmail.com',
                     pass: 'dehycqoqqepjnrwi'
                 }
             });
