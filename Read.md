@@ -29,3 +29,4 @@ Api Documentation:- api to use in postman
                     for login new users    = http://127.0.0.1:8001/api/login
                     for viewing profile    = http://127.0.0.1:8001/api/profile
                     for updating prof data = http://127.0.0.1:8001/api/updateProfile
+                    for forpas use this    = http://127.0.0.1:8001/api/CheckEmail   ( and then you can change password from front side so put this link in browser for using it directly )
