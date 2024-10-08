@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const nodemailer = require("nodemailer");
 
 const { validationResult } = require('express-validator');
 
@@ -248,9 +249,103 @@ const UpdateProfile = async(req,res) => {
     }
 }
 
+
+// FORGET PASSWORD CODE-------------------------------------------------------
+
+const CheckEmail = async (req, res) => {
+    return res.render('fogetpass/emailcheck');
+};
+
+const emailCheck = async (req, res) => {
+    try {
+        let checkEmail = await User.findOne({ email: req.body.email });
+        if (checkEmail) {
+            const transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port: 465,
+                secure: true,
+                auth: {
+                    // TODO: replace `user` and `pass` values from <https://forwardemail.net>
+                    user: 'anurag253118@gmail.com',
+                    pass: 'dehycqoqqepjnrwi'
+                }
+            });
+            var OTP = Math.round(Math.random() * 10000);
+            res.cookie('otp', OTP);
+            res.cookie('email', checkEmail.email);
+
+            const info = await transporter.sendMail({
+                from: 'anurag253118@gmail.com', // sender address
+                to: "anurag253118@gmail.com", // list of receivers
+                subject: "OTP", // Subject line
+                html: `<b>${OTP}</b>`, // html body
+            });
+            // console.log('send Mail');
+            if (info) {
+                return res.render('fogetpass/otpCheck');
+            }
+            else {
+                return res.redirect('back');
+            }
+        }
+        else {
+            console.log('email is not match');
+            return res.redirect('back');
+        }
+    }
+    catch (err) {
+        console.log('something wrong');
+        return res.redirect('back');
+    }
+};
+
+const otpCheck = async (req, res) => {
+    return res.render('fogetpass/otpCheck');
+};
+
+const otpEmail = async (req, res) => {
+    // console.log(req.body.OTP);
+    // console.log(req.cookies.otp);
+    if (req.body.OTP == req.cookies.otp) {
+        // console.log('hi');
+        return res.render('fogetpass/veryFive');
+    }
+    else {
+        // console.log('lo');
+        return res.redirect('back');
+    }
+};
+
+const NewPass = async (req, res) => {
+    // console.log(req.body);
+    let NewAdmin = await User.findOne({ email: req.cookies.email });
+    // console.log(NewAdmin.email);
+    if (NewAdmin.email == req.cookies.email) {
+        if (req.body.nPass == req.body.cPass) {
+            // console.log('hi');
+            await User.findByIdAndUpdate(NewAdmin.id, { confirm_password: req.body.nPass });
+            res.clearCookie('otp');
+            res.clearCookie('email');
+            return res.render('fogetpass/forgetdone');
+        }
+        else {
+            return res.redirect('back');
+        }
+    }
+    else {
+        return res.redirect('back');
+    }
+};
+
+
 module.exports = {
     registerUser,
     loginUser,
     getProfile,
-    UpdateProfile
+    UpdateProfile,
+    CheckEmail,
+    emailCheck,
+    otpCheck,
+    otpEmail,
+    NewPass,
 }
