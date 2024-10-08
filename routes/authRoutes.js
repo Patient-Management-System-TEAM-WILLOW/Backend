@@ -2,6 +2,7 @@ const express = require('express');
 const routes = express.Router();
 const auth = require('../middlewares/authMiddlewere');
 const authControl = require('../controllers/authcontroller');
+const appControl = require('../controllers/appoinController');
 const passport = require('passport');
 
 const { registerValidator, loginValidator } = require('../helpers/validator');
@@ -21,5 +22,11 @@ routes.get('/otpCheck', authControl.otpCheck);
 routes.post('/otpEmail', authControl.otpEmail);
 routes.post('/NewPass', authControl.NewPass);
 
+
+// appoinment routes
+routes.get('/getAppointments', auth, appControl.getAppointments);
+routes.post('/addAppointments', auth, appControl.addAppointments);
+routes.delete('/delAppointments', auth, appControl.delAppointments);
+routes.put('/uptAppointments', auth, appControl.uptAppointments);
 
 module.exports = routes;
