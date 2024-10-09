@@ -57,3 +57,19 @@ Project-Overview:- patient can appoint there sheduale for meeting to doctor & Do
                     }
 
                     and using del and upt api you have to put id in this object.
+
+
+                    now the prescription api is this
+
+                    for view = http://127.0.0.1:8001/api/getPrescription
+                    for add  = http://127.0.0.1:8001/api/addPrescription
+                    for del  = http://127.0.0.1:8001/api/delPrescription
+
+                    and body structure is this:-
+                    {
+                        "medicine_name":"persesitmole",
+                        "strength":"100mg",
+                        "dose":"1-1-1",
+                        "duration":"1-day",
+                        "when_to_take":"after food"
+                    }
